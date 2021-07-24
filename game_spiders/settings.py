@@ -13,7 +13,6 @@
 import sys
 import os
 import django
-
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'django_mainframe.settings'
@@ -21,6 +20,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'django_mainframe.settings'
 # need to explicitly setup the django
 django.setup()
 
+from testapp import models
+TEST_APP_MODEL = models.Test
 
 BOT_NAME = 'game_spiders'
 
@@ -77,9 +78,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'game_spiders.pipelines.GameSpidersPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'game_spiders.pipelines.DjangoPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
