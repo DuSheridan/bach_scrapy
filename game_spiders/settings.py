@@ -21,12 +21,14 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'django_mainframe.settings'
 # need to explicitly setup the django
 django.setup()
 
-from testapp import models
+from crawl_api import models
 
-TEST_APP_MODEL = models.Test
+SCRAPES_MODEL = models.Scrape
 
 BOT_NAME = 'game_spiders'
-
+##############################
+# SCRAPY SPECIFIC SETTINGS   #
+##############################
 SPIDER_MODULES = ['game_spiders.spiders']
 NEWSPIDER_MODULE = 'game_spiders.spiders'
 
@@ -42,13 +44,13 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-# COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
