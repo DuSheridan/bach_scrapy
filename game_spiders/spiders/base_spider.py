@@ -5,20 +5,16 @@ class BaseSpider(scrapy.Spider):
     name = "quotes"
     urls = []
     keywords = []
-    crawl_id = None
+    crawler_id = None
     max_depth = 10
 
     def start_requests(self):
-        current_depth = 1
+        current_depth = 0
         while self.urls and current_depth < self.max_depth:
             yield scrapy.Request(url=self.urls.pop(), callback=self.parse)
+            current_depth += 1
 
     def parse(self, response, **kwargs):
-        # page = response.url.split("/")[-2]
-        # filename = f'quotes-{page}.html'
-        # with open(filename, 'wb') as f:
-        #     f.write(response.body)
-        # self.log(f'Saved file {filename}')
         for quote in response.css('div.quote'):
             yield {
                 'text': quote.css('span.text::text').get(),

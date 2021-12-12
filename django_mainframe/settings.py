@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'rest_framework_api_key',
     'crawl_api.apps.CrawlApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',

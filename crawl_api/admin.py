@@ -8,6 +8,8 @@ from . import models
 ###############################################
 class ScrapeInline(admin.TabularInline):
     model = models.Scrape
+    readonly_fields = ("created_by", "date")
+    extra = 0
 
 
 ###############################################

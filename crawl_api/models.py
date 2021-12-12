@@ -14,4 +14,6 @@ class Crawler(models.Model):
 
 class Scrape(models.Model):
     created_by = models.ForeignKey(Crawler, on_delete=models.CASCADE)
-    date = models.DateField()
+    # TODO: make url mandatory
+    url = models.URLField(null=True, blank=True)
+    date = models.DateField(auto_now=True)

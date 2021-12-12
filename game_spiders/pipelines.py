@@ -5,42 +5,28 @@
 
 
 # useful for handling different item types with a single interface
+import requests
 from scrapy.exceptions import DropItem
-
-# Default Pipeline
-# class GameSpidersPipeline:
-#     def process_item(self, item, spider):
-#         return item
+from decouple import config
 
 
 class DjangoPipeline:
     collection_name = 'scrapy_items'
-
-    def __init__(self, django_model):
-        self.django_model = django_model
-
-    @classmethod
-    def from_crawler(cls, crawler, *args, **kwargs):
-        return cls(
-            crawler.settings.get('SCRAPE_MODEL')
-        )
+    scrape_api = config('SCRAPES_API')
+    django_api_key = config('CRAWLER_API_KEY')
+    headers = {'Authorization': f'Bearer {django_api_key}'}
 
     def process_item(self, item, spider):
-        item_to_save = item
-        print(item_to_save)
+        print(item)
+        request_body = {
+            'url': item['url'],
+            'created_by': spider.crawler_id
+        }
         try:
-            new_item = self.django_model(text=item["text"])
-            new_item.save()
-            return new_item
+            result = requests.post(self.scrape_api, json=request_body, headers=self.headers)
         except Exception as e:
-            raise DropItem(f"Item found with no text or exception occurred on saving the item: {item}")
+            raise DropItem(f"Exception occurred on posting the item the item, dropping: {e}")
 
-
-    # def process_item(self, item, spider):
-    #     print(item)
-    #     try:
-    #         django_item = self.django_model(url=item["url"], created_by=spider.crawler_id)
-    #         django_item.save()
-    #         return django_item
-    #     except Exception as e:
-    #         raise DropItem(f"Exception occurred on saving the item, dropping: {e}")
+        if result.status_code != 201:
+            raise DropItem(f"Item was not created, dropping")
+        return item

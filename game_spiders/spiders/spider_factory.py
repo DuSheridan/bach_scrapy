@@ -12,6 +12,8 @@ def start_batch_crawling(crawl_process: CrawlerProcess, results: List):
         crawl_id = crawler_info["id"]
         crawl_process.crawl(create_spider(url, key_words, crawl_id))
 
+    crawl_process.start()
+
 
 def create_spider(url, keywords, crawl_id):
     starting_urls = [url]
@@ -19,8 +21,8 @@ def create_spider(url, keywords, crawl_id):
     some_crawl_id = crawl_id
 
     class DynamicSpider(BaseSpider):
-        url = starting_urls
+        urls = starting_urls
         keywords = some_keywords
-        crawl_id = some_crawl_id
+        crawler_id = some_crawl_id
 
     return DynamicSpider

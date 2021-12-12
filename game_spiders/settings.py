@@ -7,24 +7,6 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-##############################
-# DJANGO SPECIFIC SETTINGS   #
-##############################
-import sys
-import os
-import django
-
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'django_mainframe.settings'
-# If you you use django outside of manage.py context, you
-# need to explicitly setup the django
-django.setup()
-
-from crawl_api import models
-
-SCRAPES_MODEL = models.Scrape
-
 BOT_NAME = 'game_spiders'
 ##############################
 # SCRAPY SPECIFIC SETTINGS   #
