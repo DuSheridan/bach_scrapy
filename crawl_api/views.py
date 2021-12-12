@@ -1,7 +1,7 @@
 import os
 
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAdminUser
 from rest_framework_api_key.permissions import HasAPIKey
 from decouple import config
 
@@ -11,22 +11,58 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR_FROM_ENV = config("SCRAPY_PROJECT")
 
 
-class CrawlersApiView(generics.ListCreateAPIView):
+###############################################################
+# CRAWLER VIEWS                                               #
+###############################################################
+class CreateCrawlersApiView(generics.CreateAPIView):
+    permission_classes = [IsAdminUser]
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
+
+
+class ListCrawlersApiView(generics.ListAPIView):
+    permission_classes = [HasAPIKey | IsAdminUser]
+    serializer_class = serializers.CrawlerSerializer
+    queryset = models.Crawler.objects.all()
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return self.queryset
+        # TODO: HasAPIKey case
+        # TODO: Test TokenAuthentication case?
+        queryset = models.Crawler.objects.filter(owner__pk=self.request.user.pk)
+        return queryset
 
 
 class CrawlerApiView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminUser]
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
 
 
-class ScrapesApiView(generics.ListCreateAPIView):
-    permission_classes = [HasAPIKey]
+###############################################################
+# SCRAPES VIEWS                                               #
+###############################################################
+class CreateScrapesApiView(generics.CreateAPIView):
+    permission_classes = [HasAPIKey | IsAdminUser]
     serializer_class = serializers.ScrapeSerializer
     queryset = models.Scrape.objects.all()
 
 
+class ListScrapesApiView(generics.ListAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = serializers.ScrapeSerializer
+    queryset = models.Scrape.objects.all()
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return self.queryset
+        # TODO: test filtering by token
+        queryset = models.Scrape.objects.filter(created_by__owner__pk=self.request.user.pk)
+        return queryset
+
+
 class ScrapeApiView(generics.RetrieveDestroyAPIView):
+    permission_classes = [IsAdminUser]
     serializer_class = serializers.ScrapeSerializer
     queryset = models.Scrape.objects.all()

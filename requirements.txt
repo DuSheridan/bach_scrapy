@@ -5,3 +5,4 @@ scrapy-djangoitem~=1.1.1
 python-decouple
 djangorestframework
 djangorestframework-api-key==2.*
+drf-yasg
