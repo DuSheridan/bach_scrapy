@@ -15,7 +15,8 @@ PROJECT_DIR_FROM_ENV = config("SCRAPY_PROJECT")
 # CRAWLER VIEWS                                               #
 ###############################################################
 class CreateCrawlersApiView(generics.CreateAPIView):
-    permission_classes = [IsAdminUser]
+    # TODO: figure out how this should work with the frontend
+    # permission_classes = [IsAdminUser]
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
 
@@ -25,13 +26,12 @@ class ListCrawlersApiView(generics.ListAPIView):
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
 
-    def get_queryset(self):
-        if self.request.user.is_staff:
-            return self.queryset
-        # TODO: HasAPIKey case
-        # TODO: Test TokenAuthentication case?
-        queryset = models.Crawler.objects.filter(owner__pk=self.request.user.pk)
-        return queryset
+
+class ApiListCrawlersApiView(generics.ListAPIView):
+    permission_classes = []
+    serializer_class = serializers.CrawlerSerializer
+    queryset = models.Crawler.objects.all()
+    # TODO: filter queryset by user, authenticate user by token
 
 
 class CrawlerApiView(generics.RetrieveUpdateDestroyAPIView):

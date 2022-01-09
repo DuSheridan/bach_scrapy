@@ -8,7 +8,7 @@ from . import models
 ###############################################
 class ScrapeInline(admin.TabularInline):
     model = models.Scrape
-    readonly_fields = ("created_by", "date")
+    readonly_fields = ("created_by", "created_on")
     extra = 0
 
 
@@ -23,3 +23,13 @@ class ScrapeAdmin(admin.ModelAdmin):
 @admin.register(models.Crawler)
 class CrawlerAdmin(admin.ModelAdmin):
     inlines = [ScrapeInline]
+
+
+@admin.register(models.ScrapeOverview)
+class ScrapeOverviewAdmin(admin.ModelAdmin):
+    # For read-only view
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False

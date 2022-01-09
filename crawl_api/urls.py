@@ -14,9 +14,10 @@ urlpatterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name="swagger__schema_view"),
     path('auth/', obtain_auth_token, name='token_auth'),
     path('crawlers/', views.CreateCrawlersApiView.as_view(), name="create_crawlers"),
+    path('api/crawlers/', views.ApiListCrawlersApiView.as_view(), name="api_crawlers"),
     path('crawlers/<int:pk>/', views.CrawlerApiView.as_view(), name="crawler"),
-    path('admin/crawlers/', views.ListCrawlersApiView.as_view(), name="crawlers"),
-    path('admin/scrapes/', views.ListScrapesApiView.as_view(), name="scrapes"),
+    path('crawlers/*/', views.ListCrawlersApiView.as_view(), name="service_crawlers"),
+    path('scrapes/*/', views.ListScrapesApiView.as_view(), name="scrapes"),
     path('scrapes/', views.CreateScrapesApiView.as_view(), name="create_scrapes"),
     path('scrapes/<int:pk>/', views.ScrapeApiView.as_view(), name="scrape")
 ]
