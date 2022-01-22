@@ -14,7 +14,7 @@ class DjangoPipeline:
     collection_name = 'scrapy_items'
     scrape_api = config('SCRAPES_API')
     django_api_key = config('CRAWLER_API_KEY')
-    headers = {'Authorization': f'Api-Key {django_api_key}'}
+    headers = {'Authorization': f'Bearer {django_api_key}'}
 
     def process_item(self, item, spider):
         print(item)

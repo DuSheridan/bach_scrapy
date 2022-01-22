@@ -13,6 +13,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name="swagger__schema_view"),
     path('auth/', obtain_auth_token, name='token_auth'),
+    path('users/', views.CreateUserView.as_view(), name='token_auth'),
     path('crawlers/', views.CreateCrawlersApiView.as_view(), name="create_crawlers"),
     path('api/crawlers/', views.ApiListCrawlersApiView.as_view(), name="api_crawlers"),
     path('crawlers/<int:pk>/', views.CrawlerApiView.as_view(), name="crawler"),

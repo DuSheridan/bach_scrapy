@@ -6,11 +6,13 @@ from scrapy.utils.log import configure_logging
 from game_spiders.spiders.spider_factory import start_batch_crawling
 
 CRAWLERS_API = config('CRAWLERS_API')
+API_KEY = config('CRAWLER_API_KEY')
+HEADERS = {'Authorization': f'Token {API_KEY}'}
 
 
 def main():
     process = CrawlerProcess(get_project_settings())
-    response = requests.get(CRAWLERS_API).json()
+    response = requests.get(CRAWLERS_API, headers=HEADERS).json()
     results = response['results']
     start_batch_crawling(process, results)
     while response["next"] is not None:
