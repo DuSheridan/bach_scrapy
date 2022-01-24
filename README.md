@@ -28,6 +28,11 @@ DB_SCHEMA = None # Required only if using a schema-capable database like Postgre
 SCRAPY_PROJECT = '<path_to_project>\scrappy_demo'
 ```
 
+Run following command:
+```
+python manage.py runserver
+```
+
 ## Development process
 - Install required packages
 - Create a new Scrapy project:
