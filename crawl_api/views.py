@@ -1,7 +1,7 @@
 import os
 
 from rest_framework import generics
-from rest_framework.permissions import IsAdminUser, DjangoModelPermissions
+from rest_framework.permissions import IsAdminUser
 from django.contrib.auth import get_user_model
 from decouple import config
 
@@ -69,6 +69,5 @@ class ScrapeApiView(generics.RetrieveDestroyAPIView):
 # USER VIEW                                                   #
 ###############################################################
 class CreateUserView(generics.CreateAPIView):
-    # permission_classes = [DjangoModelPermissions]
     serializer_class = serializers.UserSerializer
     queryset = get_user_model().objects.all()

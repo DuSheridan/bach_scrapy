@@ -9,18 +9,6 @@ Developed and tested with:
 -  Python 3.8
 -  Django 3.2.4
 -  Scrapy 2.5.0
--  scrapy-djangoitem 1.1.1
-
-## Development process
-- Install required packages
-- Create a new Scrapy project:
-```angular2html
-scrapy startproject game_spiders
-```
-- Create a new Django project and restructure it to fit with the Scrapy project:
-```angular2html
-django-admin startproject django_mainframe
-```
 
 ## How to use
 - Install requirements
@@ -37,4 +25,16 @@ DB_PASSWORD = 'pass'
 DB_NAME = 'db_name'
 DB_PORT = '5432'
 DB_SCHEMA = None # Required only if using a schema-capable database like PostgreSQL, and schema is not public
+SCRAPY_PROJECT = '<path_to_project>\scrappy_demo'
+```
+
+## Development process
+- Install required packages
+- Create a new Scrapy project:
+```angular2html
+scrapy startproject game_spiders
+```
+- Create a new Django project and restructure it to fit with the Scrapy project:
+```angular2html
+django-admin startproject django_mainframe
 ```
