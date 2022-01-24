@@ -20,6 +20,7 @@ class CreateCrawlersApiView(generics.CreateAPIView):
 
 
 class ListCrawlersApiView(generics.ListAPIView):
+    swagger_schema = None
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
 
@@ -27,7 +28,7 @@ class ListCrawlersApiView(generics.ListAPIView):
 class ApiListCrawlersApiView(generics.ListAPIView):
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
-    # TODO: filter queryset by user, authenticate user by token
+    # TODO: filter queryset by user
 
 
 class CrawlerApiView(generics.RetrieveUpdateDestroyAPIView):
@@ -39,6 +40,7 @@ class CrawlerApiView(generics.RetrieveUpdateDestroyAPIView):
 # SCRAPES VIEWS                                               #
 ###############################################################
 class CreateScrapesApiView(generics.CreateAPIView):
+    swagger_schema = None
     serializer_class = serializers.ScrapeSerializer
     queryset = models.Scrape.objects.all()
 
@@ -57,6 +59,7 @@ class ListScrapesApiView(generics.ListAPIView):
 
 
 class ScrapeApiView(generics.RetrieveDestroyAPIView):
+    swagger_schema = None
     permission_classes = [IsAdminUser]
     serializer_class = serializers.ScrapeSerializer
     queryset = models.Scrape.objects.all()
@@ -66,6 +69,6 @@ class ScrapeApiView(generics.RetrieveDestroyAPIView):
 # USER VIEW                                                   #
 ###############################################################
 class CreateUserView(generics.CreateAPIView):
-    permission_classes = [DjangoModelPermissions]
+    # permission_classes = [DjangoModelPermissions]
     serializer_class = serializers.UserSerializer
     queryset = get_user_model().objects.all()
