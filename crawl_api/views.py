@@ -7,9 +7,6 @@ from decouple import config
 
 from . import serializers, models
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
-PROJECT_DIR_FROM_ENV = config("SCRAPY_PROJECT")
-
 
 ###############################################################
 # CRAWLER VIEWS                                               #
