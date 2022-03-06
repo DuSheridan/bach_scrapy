@@ -24,8 +24,11 @@ class ListCrawlersApiView(generics.ListAPIView):
 
 class ApiListCrawlersApiView(generics.ListAPIView):
     serializer_class = serializers.CrawlerSerializer
-    queryset = models.Crawler.objects.all()
-    # TODO: filter queryset by user
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return models.Crawler.objects.all()
+        return models.Crawler.objects.all(owner=self.request.user)
 
 
 class CrawlerApiView(generics.RetrieveUpdateDestroyAPIView):
@@ -48,10 +51,10 @@ class ListScrapesApiView(generics.ListAPIView):
     queryset = models.Scrape.objects.all()
 
     def get_queryset(self):
-        if self.request.user.is_staff:
+        if self.request.user.is_superuser:
             return self.queryset
-        # TODO: test filtering by token
-        queryset = models.Scrape.objects.filter(created_by__owner__pk=self.request.user.pk)
+        # TODO: test filtering by user
+        queryset = models.Scrape.objects.filter(created_by__owner=self.request.user)
         return queryset
 
 
