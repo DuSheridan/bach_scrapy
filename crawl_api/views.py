@@ -1,7 +1,7 @@
 import os
 
 from rest_framework import generics
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, AllowAny
 from django.contrib.auth import get_user_model
 from decouple import config
 
@@ -14,6 +14,7 @@ from . import serializers, models
 class CreateCrawlersApiView(generics.CreateAPIView):
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
+
 
 
 class ListCrawlersApiView(generics.ListAPIView):
@@ -69,5 +70,6 @@ class ScrapeApiView(generics.RetrieveDestroyAPIView):
 # USER VIEW                                                   #
 ###############################################################
 class CreateUserView(generics.CreateAPIView):
+    permission_classes = [AllowAny]
     serializer_class = serializers.UserSerializer
     queryset = get_user_model().objects.all()
