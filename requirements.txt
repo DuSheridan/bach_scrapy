@@ -3,4 +3,5 @@ requests
 python-decouple
 djangorestframework
 djangorestframework-api-key==2.*
+django-cors-headers==3.11.0
 drf-yasg
