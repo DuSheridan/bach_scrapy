@@ -19,6 +19,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('auth/', obtain_auth_token, name='token_auth'),
     path('users/', views.CreateUserView.as_view(), name='create_users'),
+    path('user/', views.FetchUserView.as_view(), name='fetch_users'),
     path('crawlers/', views.CreateCrawlersApiView.as_view(), name="create_crawlers"),
     path('crawlers/*/', views.ApiListCrawlersApiView.as_view(), name="api_crawlers"),
     path('crawlers/<int:pk>/', views.CrawlerApiView.as_view(), name="crawler"),
