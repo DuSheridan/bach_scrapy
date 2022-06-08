@@ -28,7 +28,7 @@ class ApiListCrawlersApiView(generics.ListAPIView):
     def get_queryset(self):
         if self.request.user.is_superuser:
             return models.Crawler.objects.all()
-        return models.Crawler.objects.all(owner=self.request.user)
+        return models.Crawler.objects.filter(owner=self.request.user)
 
 
 class CrawlerApiView(generics.RetrieveUpdateDestroyAPIView):
