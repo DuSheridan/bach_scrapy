@@ -12,6 +12,7 @@ from . import serializers, models
 # CRAWLER VIEWS                                               #
 ###############################################################
 class CreateCrawlersApiView(generics.CreateAPIView):
+    permission_classes = [AllowAny]
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
 
@@ -32,6 +33,7 @@ class ApiListCrawlersApiView(generics.ListAPIView):
 
 
 class CrawlerApiView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [AllowAny]
     serializer_class = serializers.CrawlerSerializer
     queryset = models.Crawler.objects.all()
 
