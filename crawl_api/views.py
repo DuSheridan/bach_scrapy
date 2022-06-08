@@ -16,7 +16,6 @@ class CreateCrawlersApiView(generics.CreateAPIView):
     queryset = models.Crawler.objects.all()
 
 
-
 class ListCrawlersApiView(generics.ListAPIView):
     swagger_schema = None
     serializer_class = serializers.CrawlerSerializer
@@ -47,7 +46,6 @@ class CreateScrapesApiView(generics.CreateAPIView):
 
 
 class ListScrapesApiView(generics.ListAPIView):
-    permission_classes = [IsAdminUser]
     serializer_class = serializers.ScrapeSerializer
     queryset = models.Scrape.objects.all()
 
